@@ -57,6 +57,10 @@ typedef struct {
 	// URIs
 	HumanizerURIs uris;
 
+	// internal state
+	int offs;
+	int prop;
+
 	// Controls
 	bool active;
 } Humanizer;
@@ -127,6 +131,9 @@ instantiate(const LV2_Descriptor*     descriptor,
 
 	// Map URIs and initialise forge/logger
 	map_humanizer_uris(self->map, &self->uris);
+
+	self->prop = 50;
+	self->offs = 10;
  
 	return (LV2_Handle)self;
 }
@@ -171,11 +178,11 @@ run(LV2_Handle instance,
 					if (velocity > 107)
 						velocity = 107;
 
-					if ((rand() % 100) <= probability) {
+					if ((rand() % 100) <= self->prop) {
 						if ((rand() % 2) == 1) {
-							velocity -= rand() % 10;
+							velocity -= rand() % self->offs;
 						} else {
-							velocity += rand() % 20;
+							velocity += rand() % self->offs;
 						}
 					}
 				}
