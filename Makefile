@@ -3,6 +3,8 @@ LV2NAME = humanizer
 LIB_EXT = .so
 DESTDIR = /usr/lib64/lv2/
 BUNDLE = $(LV2NAME).lv2
+
+
 TARGETS = 
 
 TARGETS += $(BUILDDIR)$(LV2NAME)$(LIB_EXT)
@@ -24,7 +26,7 @@ $(BUILDDIR)$(LV2NAME).ttl: Makefile $(LV2NAME).ttl
 
 $(BUILDDIR)$(LV2NAME)$(LIB_EXT): humanizer.c Makefile
 	mkdir -p $(BUILDDIR)
-	gcc `pkg-config --cflags --libs lv2` humanizer.c -fPIC -DPIC -shared -o $(BUILDDIR)$(LV2NAME)$(LIB_EXT)
+	gcc -Wall -Wextra -Wno-unused `pkg-config --cflags --libs lv2` humanizer.c -fPIC -DPIC -shared -o $(BUILDDIR)$(LV2NAME)$(LIB_EXT)
 
 .PHONY: install clean uninstall
 
